@@ -34,6 +34,9 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     Role role;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "hero_id", referencedColumnName = "id")
+    private Hero hero;
     @Override
     public boolean isAccountNonExpired() {
         return true;

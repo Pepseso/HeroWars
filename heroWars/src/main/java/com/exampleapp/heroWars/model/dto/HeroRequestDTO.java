@@ -3,6 +3,6 @@ package com.exampleapp.heroWars.model.dto;
 import lombok.Data;
 
 @Data
-public class HeroDTO {
+public class HeroRequestDTO {
     private String name;
 }
