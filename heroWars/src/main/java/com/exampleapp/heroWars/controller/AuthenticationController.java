@@ -2,6 +2,7 @@ package com.exampleapp.heroWars.controller;
 
 import com.exampleapp.heroWars.model.dto.AuthenticationResponse;
 import com.exampleapp.heroWars.model.User;
+import com.exampleapp.heroWars.model.dto.LoginDTO;
 import com.exampleapp.heroWars.model.dto.RegisterDTO;
 import com.exampleapp.heroWars.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(
-            @RequestBody User request
+            @RequestBody LoginDTO request
     ){
         return ResponseEntity.ok(authenticationService.authenticate(request));
     }
