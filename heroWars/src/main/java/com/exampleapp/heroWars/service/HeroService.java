@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class HeroService {
 
-    private final HeroRepository repository;
-    private final UserRepository user;
+    private final HeroRepository heroRepository;
+    private final UserRepository userRepository;
 
     public boolean alreadyExists (String name){
-        return repository.findHeroByName(name).isPresent();
+        return heroRepository.findHeroByName(name).isPresent();
     }
 
     public Hero createHero(){
