@@ -1,4 +1,4 @@
-package com.exampleapp.heroWars.model;
+package com.exampleapp.heroWars.model.dto;
 
 public class AuthenticationResponse {
 

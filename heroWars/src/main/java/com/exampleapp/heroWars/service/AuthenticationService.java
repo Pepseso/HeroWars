@@ -1,7 +1,8 @@
 package com.exampleapp.heroWars.service;
 
-import com.exampleapp.heroWars.model.AuthenticationResponse;
+import com.exampleapp.heroWars.model.dto.AuthenticationResponse;
 import com.exampleapp.heroWars.model.User;
+import com.exampleapp.heroWars.model.dto.RegisterDTO;
 import com.exampleapp.heroWars.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,7 +25,7 @@ public class AuthenticationService {
         this.authenticationManager = authenticationManager;
     }
 
-    public AuthenticationResponse register (User request){
+    public AuthenticationResponse register (RegisterDTO request){
         User user = new User();
         user.setFirstname(request.getFirstname());
         user.setLastname(request.getLastname());

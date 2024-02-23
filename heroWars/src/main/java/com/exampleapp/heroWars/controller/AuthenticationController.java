@@ -1,7 +1,8 @@
 package com.exampleapp.heroWars.controller;
 
-import com.exampleapp.heroWars.model.AuthenticationResponse;
+import com.exampleapp.heroWars.model.dto.AuthenticationResponse;
 import com.exampleapp.heroWars.model.User;
+import com.exampleapp.heroWars.model.dto.RegisterDTO;
 import com.exampleapp.heroWars.service.AuthenticationService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +21,7 @@ private final AuthenticationService authenticationService;
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody User request
+            @RequestBody RegisterDTO request
     ){
         return ResponseEntity.ok(authenticationService.register(request));
     }
