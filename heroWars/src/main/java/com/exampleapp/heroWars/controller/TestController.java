@@ -23,10 +23,4 @@ public class TestController {
     public ResponseEntity<String> getCurrentUserName(Principal principal){
         return ResponseEntity.ok(userService.getUsername());
     }
-
-    @GetMapping("/quest")
-    public ResponseEntity<String> getCurrentUserName(){
-        return ResponseEntity.ok(questService.getRandomQuest());
-    }
-
 }

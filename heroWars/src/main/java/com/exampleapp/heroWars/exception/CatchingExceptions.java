@@ -51,9 +51,27 @@ public class CatchingExceptions {
                 .body(new ErrorDTO("Username must contain only letters and numbers"));
     }
 
-    @ExceptionHandler(NoQuestsFoundException.class)
-    public static ResponseEntity<Object> noQuestsFound() {
+    @ExceptionHandler(QuestsFileReadingErrorException.class)
+    public static ResponseEntity<Object> fileReadingError() {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                 .body(new ErrorDTO("Some error with quests"));
+    }
+
+    @ExceptionHandler(CannotGenerateMonsterException.class)
+    public static ResponseEntity<Object> cannotGenerateMonster() {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(new ErrorDTO("Some error with getting monster to battle with"));
+    }
+
+    @ExceptionHandler(MonsterNotFoundException.class)
+    public static ResponseEntity<Object> monsterNotFound() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDTO("This monster does not exists"));
+    }
+
+    @ExceptionHandler(MonsterNotAliveException.class)
+    public static ResponseEntity<Object> monsterDeadAlready() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDTO("This monster is not alive anymore"));
     }
 }
