@@ -1,5 +1,6 @@
 package com.exampleapp.heroWars.controller;
 
+import com.exampleapp.heroWars.service.QuestService;
 import com.exampleapp.heroWars.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +16,17 @@ import java.security.Principal;
 public class TestController {
 
     private final UserService userService;
+    private final QuestService questService;
 
 
     @GetMapping("/username")
     public ResponseEntity<String> getCurrentUserName(Principal principal){
         return ResponseEntity.ok(userService.getUsername());
+    }
+
+    @GetMapping("/quest")
+    public ResponseEntity<String> getCurrentUserName(){
+        return ResponseEntity.ok(questService.getRandomQuest());
     }
 
 }

@@ -50,4 +50,10 @@ public class CatchingExceptions {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorDTO("Username must contain only letters and numbers"));
     }
+
+    @ExceptionHandler(NoQuestsFoundException.class)
+    public static ResponseEntity<Object> noQuestsFound() {
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
+                .body(new ErrorDTO("Some error with quests"));
+    }
 }
