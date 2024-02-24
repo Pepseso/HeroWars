@@ -8,6 +8,7 @@ import lombok.Data;
 @Entity
 public class Hero {
 
+
     @Id
     @GeneratedValue (strategy = GenerationType.SEQUENCE)
     @Column(name = "id")

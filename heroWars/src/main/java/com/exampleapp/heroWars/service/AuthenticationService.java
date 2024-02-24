@@ -1,5 +1,6 @@
 package com.exampleapp.heroWars.service;
 
+import com.exampleapp.heroWars.exception.registration.UsernameAlreadyExistsException;
 import com.exampleapp.heroWars.model.dto.AuthenticationResponse;
 import com.exampleapp.heroWars.model.User;
 import com.exampleapp.heroWars.model.dto.LoginDTO;
@@ -27,6 +28,9 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register (RegisterDTO request){
+        if(repository.findByUsername(request.getUsername()).isPresent()){
+            throw new UsernameAlreadyExistsException();
+        }
         User user = new User();
         user.setFirstname(request.getFirstname());
         user.setLastname(request.getLastname());
