@@ -1,7 +1,7 @@
 package com.exampleapp.heroWars.exception;
 
 import com.exampleapp.heroWars.exception.hero.*;
-import com.exampleapp.heroWars.exception.registration.UsernameAlreadyExistsException;
+import com.exampleapp.heroWars.exception.registration.*;
 import com.exampleapp.heroWars.model.dto.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,5 +33,21 @@ public class CatchingExceptions {
     public static ResponseEntity<Object> userHasNoHeroYet() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorDTO("Hey. You should create one, before you can see the stats."));
+    }
+
+    @ExceptionHandler(PasswordTooShortException.class)
+    public static ResponseEntity<Object> passwordTooShortException() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDTO("Password must be at least 4 letters long."));
+    }
+    @ExceptionHandler(RegistrationDataMissingException.class)
+    public static ResponseEntity<Object> registrationDataMissing() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDTO("Registration data is mandatory"));
+    }
+    @ExceptionHandler(WrongFromatOfUsernameException.class)
+    public static ResponseEntity<Object> usernameWrongFormat() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDTO("Username must contain only letters and numbers"));
     }
 }

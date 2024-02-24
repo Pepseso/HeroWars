@@ -1,6 +1,9 @@
 package com.exampleapp.heroWars.service;
 
+import com.exampleapp.heroWars.exception.registration.PasswordTooShortException;
+import com.exampleapp.heroWars.exception.registration.RegistrationDataMissingException;
 import com.exampleapp.heroWars.exception.registration.UsernameAlreadyExistsException;
+import com.exampleapp.heroWars.exception.registration.WrongFromatOfUsernameException;
 import com.exampleapp.heroWars.model.dto.AuthenticationResponse;
 import com.exampleapp.heroWars.model.User;
 import com.exampleapp.heroWars.model.dto.LoginDTO;
@@ -10,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.regex.*;
 
 @Service
 public class AuthenticationService {
@@ -28,9 +32,7 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register (RegisterDTO request){
-        if(repository.findByUsername(request.getUsername()).isPresent()){
-            throw new UsernameAlreadyExistsException();
-        }
+        validateRegistrationData(request);
         User user = new User();
         user.setFirstname(request.getFirstname());
         user.setLastname(request.getLastname());
@@ -55,5 +57,34 @@ public class AuthenticationService {
 
         return new AuthenticationResponse(token);
 
+    }
+
+    private void validateRegistrationData(RegisterDTO request){
+        if(missingRegisterData(request)){
+            throw new RegistrationDataMissingException();
+        }
+        if(repository.findByUsername(request.getUsername()).isPresent()){
+            throw new UsernameAlreadyExistsException();
+        }
+        if(request.getPassword().length() < 4){
+            throw new PasswordTooShortException();
+        }
+        if (!checkIfUsernameContainsLettersAndNumbersOnly(request.getUsername())){
+            throw new WrongFromatOfUsernameException();
+        }
+    }
+
+    private boolean checkIfUsernameContainsLettersAndNumbersOnly(String username) {
+        String pattern = "^[a-zA-Z0-9]*$";
+        Pattern regex = Pattern.compile(pattern);
+        Matcher matcher = regex.matcher(username);
+        return matcher.matches();
+    }
+
+    private boolean missingRegisterData( RegisterDTO request){
+        return request.getUsername().isBlank()
+                || request.getFirstname().isBlank()
+                || request.getLastname().isBlank()
+                || request.getPassword().isBlank();
     }
 }
