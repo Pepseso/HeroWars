@@ -77,6 +77,8 @@ public class HeroService {
     }
 
     public Hero getMyHero(){
+        Hero hero = userService.getUser().getHero();
+        if(hero == null) throw new NoHeroConnectedToUserException();
         return userService.getUser().getHero();
     }
 
@@ -93,5 +95,9 @@ public class HeroService {
                 .gold(hero.getGold())
                 .level(hero.getLevel())
                 .build();
+    }
+
+    public void getPriceGold(int goldAmount, Hero hero) {
+        hero.setGold(hero.getGold() + goldAmount);
     }
 }
