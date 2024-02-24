@@ -1,9 +1,11 @@
 package com.exampleapp.heroWars.service;
 
+import com.exampleapp.heroWars.exception.hero.AlreadyHaveHeroException;
 import com.exampleapp.heroWars.exception.hero.HeroWithThisNameAlreadyExistsException;
+import com.exampleapp.heroWars.exception.hero.NoHeroConnectedToUserException;
 import com.exampleapp.heroWars.model.Hero;
 import com.exampleapp.heroWars.model.User;
-import com.exampleapp.heroWars.model.dto.HeroCreationResponseDTO;
+import com.exampleapp.heroWars.model.dto.HeroResponseDTO;
 import com.exampleapp.heroWars.model.dto.HeroRequestDTO;
 import com.exampleapp.heroWars.repository.HeroRepository;
 import com.exampleapp.heroWars.repository.UserRepository;
@@ -29,7 +31,10 @@ public class HeroService {
         return heroRepository.findHeroByName(name).isPresent();
     }
 
-    public HeroCreationResponseDTO createHero(HeroRequestDTO request){
+    public HeroResponseDTO createHero(HeroRequestDTO request){
+        if(userAlreadyHasHero()){
+            throw new AlreadyHaveHeroException();
+        }
         if(alreadyExists(request.getName())){
             throw new HeroWithThisNameAlreadyExistsException();
         }
@@ -38,7 +43,7 @@ public class HeroService {
         heroRepository.save(hero);
         user.setHero(hero);
         userRepository.save(user);
-        return HeroCreationResponseDTO
+        return HeroResponseDTO
                 .builder()
                 .name(hero.getName())
                 .level(hero.getLevel())
@@ -65,5 +70,28 @@ public class HeroService {
 
     public int getMaxHp(Hero hero){
         return hero.getLevel() * HP_CONSTANT;
+    }
+
+    public boolean userAlreadyHasHero(){
+        return userService.getUser().getHero() != null;
+    }
+
+    public Hero getMyHero(){
+        return userService.getUser().getHero();
+    }
+
+    public HeroResponseDTO showMyHero() {
+        if(!userAlreadyHasHero()){
+            throw new NoHeroConnectedToUserException();
+        }
+        Hero hero = getMyHero();
+        return HeroResponseDTO
+                .builder()
+                .name(hero.getName())
+                .experiencePoints(hero.getExperiencePoints())
+                .hp(hero.getHp())
+                .gold(hero.getGold())
+                .level(hero.getLevel())
+                .build();
     }
 }

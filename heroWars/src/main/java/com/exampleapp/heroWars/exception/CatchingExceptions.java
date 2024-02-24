@@ -22,4 +22,16 @@ public class CatchingExceptions {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorDTO("This username already exists"));
     }
+
+    @ExceptionHandler(AlreadyHaveHeroException.class)
+    public static ResponseEntity<Object> alreadyHaveHero() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDTO("Hey. You already have one hero!"));
+    }
+
+    @ExceptionHandler(NoHeroConnectedToUserException.class)
+    public static ResponseEntity<Object> userHasNoHeroYet() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ErrorDTO("Hey. You should create one, before you can see the stats."));
+    }
 }
