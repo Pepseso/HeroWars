@@ -1,0 +1,113 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "Hero Wars API",
+        "description": "API for online game Hero Wars"
+    },
+    "servers": [
+        {
+            "url": "http://localhost8080/api/v1"
+        }
+    ],
+    "paths": {
+        "/hero/createHero": {
+            "post": {
+                "summary": "Create a hero",
+                "tags": ["Hero"],
+                "description": "Endpoint to create a hero",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/HeroRequestDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HeroResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorCreateHero"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HeroRequestDTO": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example":"Conan the Barbarian"
+                    }
+                }
+            },
+            "HeroResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Conan the Barbarian"
+                    },
+                    "hp": {
+                        "type": "string",
+                        "example": "150"
+                    },
+                    "level": {
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "experiencePoints": {
+                        "type": "string",
+                        "example": "12"
+                    },
+                    "gold": {
+                        "type": "string",
+                        "example": "500"
+                    }
+                }
+            },
+            "ErrorCreateHero": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "example": "Hey. You already have one hero!"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
