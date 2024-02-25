@@ -14,7 +14,9 @@
         "/hero/createHero": {
             "post": {
                 "summary": "Create a hero",
-                "tags": ["Hero"],
+                "tags": [
+                    "Hero"
+                ],
                 "description": "Endpoint to create a hero",
                 "requestBody": {
                     "required": true,
@@ -54,6 +56,247 @@
                     }
                 ]
             }
+        },
+        "/hero/myHero": {
+            "get": {
+                "summary": "Get a hero",
+                "tags": [
+                    "Hero"
+                ],
+                "description": "Endpoint for get your hero stats",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HeroResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorShowHero"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/healthCheck/authenticated": {
+            "get": {
+                "summary": "Check the state of security",
+                "tags": [
+                    "HealthCheck"
+                ],
+                "description": "Check the state of security. If everything works you should get 200. Without token you will get 401",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "example": "It seems that security works"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/healthCheck/ping": {
+            "get": {
+                "summary": "Check the status of API",
+                "tags": [
+                    "HealthCheck"
+                ],
+                "description": "If API is online you will receive 200. No auth needed for this endpoint",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "string",
+                                    "example": "HealthCheck OK"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/quest/newQuest": {
+            "get": {
+                "summary": "Get a new quest",
+                "tags": [
+                    "Quest"
+                ],
+                "description": "Endpoint for get a new quest. In response you will get the quest description and the id of newly generated monster",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetQuestResponseDTO"
+                                }
+                            }
+                        }
+                    },
+                    "503": {
+                        "description": "Service Unavailable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorQuest"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/quest/battle/{id}": {
+            "get": {
+                "summary": "Get a new quest",
+                "tags": [
+                    "Quest"
+                ],
+                "description": "Endpoint to battle with monster",
+                "parameters": [
+                    {
+                      "name": "id",
+                      "in": "path",
+                      "description": "ID of monster to fight with",
+                      "required": true,
+                      "schema": {
+                        "type": "integer",
+                        "format": "int64"
+                      }
+                    }
+                  ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BattleResultDTO"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorBattle"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "summary": "Register new user",
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Endpoint for registration of new user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthenticationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorRegistration"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "summary": "Login",
+                "tags": [
+                    "Auth"
+                ],
+                "description": "Login and get token",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthenticationResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -63,7 +306,7 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "example":"Conan the Barbarian"
+                        "example": "Conan the Barbarian"
                     }
                 }
             },
@@ -75,21 +318,101 @@
                         "example": "Conan the Barbarian"
                     },
                     "hp": {
-                        "type": "string",
+                        "type": "integer",
                         "example": "150"
                     },
                     "level": {
-                        "type": "string",
+                        "type": "integer",
                         "example": "1"
                     },
                     "experiencePoints": {
-                        "type": "string",
+                        "type": "integer",
                         "example": "12"
                     },
                     "gold": {
-                        "type": "string",
+                        "type": "integer",
                         "example": "500"
                     }
+                }
+            },
+            "RegisterDTO": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "Username1234"
+                    },
+                    "firstname": {
+                        "type": "string",
+                        "example": "Conan"
+                    },
+                    "lastname": {
+                        "type": "string",
+                        "example": "Barbarian"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "ILoveConanTheBarbarian"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": ["USER", "ADMIN"],
+                        "example": "USER"
+                    }
+                }
+            },
+            "GetQuestResponseDTO": {
+                "type": "object",
+                "properties": {
+                    "questDescription": {
+                        "type": "string",
+                        "example": "In the galaxy far far away..."
+                    },
+                    "monsterId": {
+                        "type": "integer",
+                        "example": "3456"
+                    }
+                }
+            },
+            "BattleResultDTO": {
+                "type": "object",
+                "properties": {
+                    "startOfBattle": {
+                        "type": "string",
+                        "example": "You found the monster and suddenly you hear : Howl of the Night!"
+                    },
+                    "battleLog": {
+                        "type": "string",
+                        "example": "[Round 1: Monster attacks and deal 1 damage to your hero. Hero attacks monster and deal: 6, Round 2: Monster attacks and deal 1 damage to your hero. Hero attacks monster and deal: 6]"
+                    },
+                    "battleResults": {
+                        "type": "string",
+                        "example": "Monster is dead."
+                    }
+                    
+                }
+            },
+            "AuthenticationResponse": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string",
+                        "example": "LionelMessi"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "ILikeToPlayFootballALot"
+                    }                   
+                }
+            },
+            "LoginDTO": {
+                "type": "object",
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "example": "tokenString"
+                    }
+                    
                 }
             },
             "ErrorCreateHero": {
@@ -98,6 +421,42 @@
                     "error": {
                         "type": "string",
                         "example": "Hey. You already have one hero!"
+                    }
+                }
+            },
+            "ErrorShowHero": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "example": "Hey. You should create one, before you can see the stats."
+                    }
+                }
+            },
+            "ErrorQuest": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "example": "Some error with quests."
+                    }
+                }
+            },
+            "ErrorRegistration": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "example": "Password must be at least 4 letters long."
+                    }
+                }
+            },
+            "ErrorBattle": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "example": "This monster does not exists"
                     }
                 }
             }
