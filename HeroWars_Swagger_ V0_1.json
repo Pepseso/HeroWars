@@ -395,6 +395,15 @@
             "AuthenticationResponse": {
                 "type": "object",
                 "properties": {
+                    "token": {
+                        "type": "string",
+                        "example": "tokenString"
+                    }                  
+                }
+            },
+            "LoginDTO": {
+                "type": "object",
+                "properties": {
                     "username": {
                         "type": "string",
                         "example": "LionelMessi"
@@ -403,16 +412,6 @@
                         "type": "string",
                         "example": "ILikeToPlayFootballALot"
                     }                   
-                }
-            },
-            "LoginDTO": {
-                "type": "object",
-                "properties": {
-                    "token": {
-                        "type": "string",
-                        "example": "tokenString"
-                    }
-                    
                 }
             },
             "ErrorCreateHero": {
