@@ -1,6 +1,8 @@
 package com.exampleapp.heroWars.model.dto;
 
 import com.exampleapp.heroWars.model.Role;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data

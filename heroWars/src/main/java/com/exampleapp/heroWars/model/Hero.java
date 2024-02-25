@@ -1,6 +1,7 @@
 package com.exampleapp.heroWars.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
