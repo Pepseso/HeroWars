@@ -22,11 +22,11 @@ public class HeroWarsApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Monster werewolf = new Werewolf();
-		Monster dragon = new Dragon();
-		Monster orc = new Orc();
-		monsterRepository.save(werewolf);
-		monsterRepository.save(dragon);
-		monsterRepository.save(orc);
+//		Monster werewolf = new Werewolf();
+//		Monster dragon = new Dragon();
+//		Monster orc = new Orc();
+//		monsterRepository.save(werewolf);
+//		monsterRepository.save(dragon);
+//		monsterRepository.save(orc);
 	}
 }
